@@ -74,6 +74,21 @@ GOOGLE_MAPS_API_KEY=optional          # better place lookup than OpenStreetMap
 - To check a ride between two other places, say both names, or untick "Start from my location".
 - If a place is found wrongly, type the full name in the **To** box.
 
+## Roadmap: same engine, more everyday bills
+
+Meter Sach is a "voice → exact tariff check" engine. The LLM only extracts the facts, Python does the math from an official tariff table, and Timbre speaks the verdict. The same pipeline extends to:
+
+| Next | What the user says | What it checks |
+|---|---|---|
+| 🚇 **Metro** | "Majestic se Whitefield, how much, and the smart card discount?" | Official station-to-station fare, smart card vs token, wrong-fare or overcharge at the counter |
+| 🚌 **City / state buses** | "Majestic to Electronic City, AC bus, kitna ticket?" | Fare by stage and bus type (ordinary, deluxe, AC), conductor charged too much |
+| 🚖 **Cabs** | "Indiranagar to airport, app shows 900" | Meter-equivalent fare vs app price, surge detection |
+| ⚡ **Electricity (EB / BESCOM / TNEB)** | "This month 320 units, bill came 2400" | Slab-wise bill from the units, free-units subsidy, meter or billing mistakes |
+| 💧 **Water bill** | "Water bill 1200 for 18 kilolitres" | Slab calculation and sewerage charge, whether the bill is correct |
+| 🛢️ **Others** | LPG refill, parking, toll, taxi-airport | Any government-notified rate card |
+
+Why it scales: every item is just a new tariff table plus a few fields for the LLM to extract. Adding a new service doesn't need a new model or new speech code.
+
 ## Notes and limits
 
 - Tariff numbers are **demo values**. Verify them against the current official fare notification before relying on them.
